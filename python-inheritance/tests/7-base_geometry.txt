@@ -1,46 +1,76 @@
+The 'BaseGeometry' test module
+==============================
+
+Using 'BaseGeometry'
+--------------------
+
 >>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
 >>> bg = BaseGeometry()
 
-# Testing integer_validator with valid cases
->>> bg.integer_validator("width", 12)
->>> bg.integer_validator("height", 25)
+>>> bg.integer_validator("age", 20)
 
-# Testing invalid cases (TypeError)
+>>> bg.integer_validator("age", (20, 62))
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age", [20, 62])
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age", {20, 62})
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age", [20])
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age", True)
+Traceback (most recent call last):
+TypeError: age must be an integer
+
 >>> bg.integer_validator("name", "John")
 Traceback (most recent call last):
-    ...
 TypeError: name must be an integer
 
->>> bg.integer_validator("width", "abc")
-Traceback (most recent call last):
-    ...
-TypeError: width must be an integer
-
-# Testing invalid cases (ValueError)
 >>> bg.integer_validator("age", 0)
 Traceback (most recent call last):
-    ...
 ValueError: age must be greater than 0
 
 >>> bg.integer_validator("distance", -4)
 Traceback (most recent call last):
-    ...
 ValueError: distance must be greater than 0
 
-# Additional test cases for edge cases
->>> bg.integer_validator("max", 1)
->>> bg.integer_validator("min", 1000000000)
-
-# Testing integer_validator with floating-point numbers (not allowed)
->>> bg.integer_validator("width", 12.5)
+>>> bg.integer_validator("age", 5.6)
 Traceback (most recent call last):
-    ...
-TypeError: width must be an integer
+TypeError: age must be an integer
 
->>> bg.integer_validator("height", -2.3)
+>>> bg.integer_validator("age", )
 Traceback (most recent call last):
-    ...
-TypeError: height must be an integer
+TypeError: integer_validator() missing 1 required positional argument: 'value'
 
-# Testing valid edge case (large positive number)
->>> bg.integer_validator("value", 999999999)
+>>> bg.integer_validator(, 5.6)
+Traceback (most recent call last):
+SyntaxError: invalid syntax
+
+>>> bg.integer_validator()
+Traceback (most recent call last):
+TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+
+>>> bg.integer_validator("age", None)
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator(None, 56)
+
+>>> bg.integer_validator("HSBC", 56, 89)
+Traceback (most recent call last):
+TypeError: integer_validator() takes 3 positional arguments but 4 were given
+
+>>> bg.integer_validator(75, "John")
+Traceback (most recent call last):
+TypeError: 75 must be an integer
+
+>>> bg.area()
+Traceback (most recent call last):
+Exception: area() is not implemented

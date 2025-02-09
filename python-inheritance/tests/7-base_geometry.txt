@@ -1,29 +1,46 @@
->>> BaseGeometry = __import__('6-base_geometry').BaseGeometry
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
 >>> bg = BaseGeometry()
 
-# Testing area method
->>> bg.area()
+# Testing integer_validator with valid cases
+>>> bg.integer_validator("width", 12)
+>>> bg.integer_validator("height", 25)
+
+# Testing invalid cases (TypeError)
+>>> bg.integer_validator("name", "John")
 Traceback (most recent call last):
     ...
-Exception: area() is not implemented
+TypeError: name must be an integer
 
-# Testing integer_validator method
->>> bg.integer_validator("width", 5)
->>> bg.integer_validator("height", 10)
-
-# Testing invalid integer value
->>> bg.integer_validator("width", -5)
+>>> bg.integer_validator("width", "abc")
 Traceback (most recent call last):
     ...
-ValueError: width must be greater than 0
+TypeError: width must be an integer
 
->>> bg.integer_validator("height", "10")
+# Testing invalid cases (ValueError)
+>>> bg.integer_validator("age", 0)
+Traceback (most recent call last):
+    ...
+ValueError: age must be greater than 0
+
+>>> bg.integer_validator("distance", -4)
+Traceback (most recent call last):
+    ...
+ValueError: distance must be greater than 0
+
+# Additional test cases for edge cases
+>>> bg.integer_validator("max", 1)
+>>> bg.integer_validator("min", 1000000000)
+
+# Testing integer_validator with floating-point numbers (not allowed)
+>>> bg.integer_validator("width", 12.5)
+Traceback (most recent call last):
+    ...
+TypeError: width must be an integer
+
+>>> bg.integer_validator("height", -2.3)
 Traceback (most recent call last):
     ...
 TypeError: height must be an integer
 
-# Testing invalid type for integer
->>> bg.integer_validator("length", "abc")
-Traceback (most recent call last):
-    ...
-TypeError: length must be an integer
+# Testing valid edge case (large positive number)
+>>> bg.integer_validator("value", 999999999)

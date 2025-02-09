@@ -117,7 +117,7 @@ class Rectangle:
     def __repr__(self):
         """
         Returns a string to recreate the rectangle.
-
+        
         Returns:
             str: A string like 'Rectangle(width, height)'.
         """

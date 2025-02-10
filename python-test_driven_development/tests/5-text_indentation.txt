@@ -1,0 +1,16 @@
+>>> text_indentation = __import__('5-text_indentation').text_indentation
+>>> text_indentation("Hello world: this is a test.")
+Hello world:
+<BLANKLINE>
+this is a test.
+<BLANKLINE>
+
+>>> text_indentation(123)
+Traceback (most recent call last):
+    ...
+TypeError: text must be a string
+
+>>> text_indentation("")
+Traceback (most recent call last):
+    ...
+TypeError: text must be a string

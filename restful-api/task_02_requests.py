@@ -1,15 +1,12 @@
-#!/usr/bin/env python3
-"""Fetch posts from JSONPlaceholder API and process them."""
-
 import requests
 import csv
-
-"""Fetch posts from JSONPlaceholder API and process them."""
+"""Fetch posts from JSONPlaceholder API and print their titles."""
 
 
 def fetch_and_print_posts():
-    """Fetch posts and print their titles."""
-    response = requests.get("https://jsonplaceholder.typicode.com/posts")
+    """Fetch posts from JSONPlaceholder API and print their titles."""
+    url = "https://jsonplaceholder.typicode.com/posts"
+    response = requests.get(url)
     print(f"Status Code: {response.status_code}")
 
     if response.status_code == 200:
@@ -18,13 +15,21 @@ def fetch_and_print_posts():
 
 
 def fetch_and_save_posts():
-    """Fetch posts and save them to 'posts.csv'."""
-    response = requests.get("https://jsonplaceholder.typicode.com/posts")
+    """Fetch posts and save them to posts.csv, excluding 'userId'."""
+    url = "https://jsonplaceholder.typicode.com/posts"
+    response = requests.get(url)
 
     if response.status_code == 200:
-        with open("posts.csv", "w", newline="", encoding="utf-8") as file:
-            writer = csv.DictWriter(file, fieldnames=["id", "title", "body"])
-            writer.writeheader()
-            writer.writerows(response.json())
+        posts = response.json()
 
-        print("Data saved to posts.csv")
+        filename = "posts.csv"
+        headers = ["id", "title", "body"]
+
+        filtered_posts = [{k: post[k] for k in headers} for post in posts]
+
+        with open(filename, mode="w", newline="", encoding="utf-8") as file:
+            writer = csv.DictWriter(file, fieldnames=headers)
+            writer.writeheader()
+            writer.writerows(filtered_posts)
+
+        print(f"Data saved to {filename}")

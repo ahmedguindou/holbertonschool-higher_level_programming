@@ -4,6 +4,8 @@
 import requests
 import csv
 
+"""Fetch posts from JSONPlaceholder API and process them."""
+
 
 def fetch_and_print_posts():
     """Fetch posts and print their titles."""

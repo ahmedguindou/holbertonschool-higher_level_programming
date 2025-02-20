@@ -40,7 +40,7 @@ def status():
 @app.route("/users/<username>")
 def get_user(username):
     """Retrieve user details based on username.
-    
+
     Args:
         username (str): The username of the user to retrieve.
 

@@ -1,74 +1,56 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
-Module to develop a Simple API using Python with Flask
+This is the ``task_04_flask`` module
 """
-
-from flask import Flask
-from flask import jsonify
-from flask import request
+from flask import Flask, jsonify, request
 
 
 app = Flask(__name__)
-
 users = {}
 
 
-@app.route("/")
-# Define a route for the root URL ("/").
+@app.route('/')
 def home():
-    """
-    Function to handle this route ("/").
-    """
+    """Handle root URL"""
     return "Welcome to the Flask API!"
 
 
-@app.route("/data")
-# Define a route for the root URL ("/").
+@app.route('/data')
 def data():
-    """
-    Function to handle data route.
-    """
-    username = list(users.keys())
-    return jsonify(username)
+    """Display data"""
+    return jsonify(list(users.keys()))
 
 
-@app.route("/status")
-# Define a route for the root URL ("/").
-def get_status():
-    """
-    Function to return status.
-    """
+@app.route('/status')
+def status():
+    """Display Status"""
     return "OK"
 
 
-@app.route("/users/<username>")
-# Define a dynamic route for the root URL ("/users/<username>").
-def get_username_obj(username):
-    """
-    Function that returns the full object
-    corresponding to the provided username
-    """
-    user = users.get(username)
-    if user:
-        return jsonify(users)
-    else:
-        return jsonify({"error": "User not found"}), 404
+@app.route('/users/<username>')
+def userInfo(username):
+    """Display specified user"""
+    if username in users:
+        return jsonify(users[username])
+    return jsonify({"error": "User not found"}), 404
 
 
-@app.route("/add_user", methods=['POST'])
+@app.route('/add_user', methods=['POST'])
 def add_user():
-    """
-    Function that adds new user.
-    """
-    new_user = request.get_json()
-    username = new_user.get("username")
-
+    """Add a new user"""
+    userdata = request.get_json()
+    username = userdata.get('username')
     if not username:
         return jsonify({"error": "Username is required"}), 400
+    users[username] = {
+        'username': username,
+        'name': userdata.get('name'),
+        'age': userdata.get('age'),
+        'city': userdata.get('city')
+    }
 
-    users[username] = new_user
-    return jsonify({"message": "User added", "user": new_user}), 201
+    return jsonify({"message": "User added", "user": users[username]}), 201
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

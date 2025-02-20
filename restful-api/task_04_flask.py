@@ -1,7 +1,25 @@
 from flask import Flask, jsonify, request
+"""
+Simple Flask API.
 
+This API provides basic functionalities:
+- Welcome message at the root endpoint.
+- Retrieve a list of all usernames.
+- Check API status.
+- Get user details by username.
+- Add new users via a POST request.
+"""
 app = Flask(__name__)
+"""
+Simple Flask API.
 
+This API provides basic functionalities:
+- Welcome message at the root endpoint.
+- Retrieve a list of all usernames.
+- Check API status.
+- Get user details by username.
+- Add new users via a POST request.
+"""
 # Dictionary to store user data
 users = {
     "jane": {

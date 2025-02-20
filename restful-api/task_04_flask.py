@@ -1,25 +1,7 @@
 from flask import Flask, jsonify, request
-"""
-Simple Flask API.
 
-This API provides basic functionalities:
-- Welcome message at the root endpoint.
-- Retrieve a list of all usernames.
-- Check API status.
-- Get user details by username.
-- Add new users via a POST request.
-"""
 app = Flask(__name__)
-"""
-Simple Flask API.
 
-This API provides basic functionalities:
-- Welcome message at the root endpoint.
-- Retrieve a list of all usernames.
-- Check API status.
-- Get user details by username.
-- Add new users via a POST request.
-"""
 # Dictionary to store user data
 users = {
     "jane": {
@@ -39,25 +21,32 @@ users = {
 
 @app.route("/")
 def home():
-    """Return a welcome message."""
+    """Return a welcome message for the API."""
     return "Welcome to the Flask API!"
 
 
 @app.route("/data")
 def get_usernames():
-    """Return a list of all usernames."""
+    """Return a list of all usernames stored in the API."""
     return jsonify(list(users.keys()))
 
 
 @app.route("/status")
 def status():
-    """Return API status."""
+    """Return a status message indicating API is running."""
     return "OK"
 
 
 @app.route("/users/<username>")
 def get_user(username):
-    """Return user details by username."""
+    """Retrieve user details based on username.
+    
+    Args:
+        username (str): The username of the user to retrieve.
+
+    Returns:
+        JSON response containing user data or an error message.
+    """
     user = users.get(username)
     if user:
         return jsonify(user)
@@ -66,7 +55,13 @@ def get_user(username):
 
 @app.route("/add_user", methods=["POST"])
 def add_user():
-    """Add a new user to the database."""
+    """Add a new user to the API.
+
+    Expects a JSON payload with 'username', 'name', 'age', and 'city'.
+
+    Returns:
+        JSON response confirming user addition or an error message.
+    """
     data = request.get_json()
 
     if not data or "username" not in data:
@@ -81,7 +76,7 @@ def add_user():
         "username": username,
         "name": data.get("name", ""),
         "age": data.get("age", 0),
-        "city": data.get("city", ""),
+        "city": data.get("city", "")
     }
 
     return jsonify({"message": "User added", "user": users[username]}), 201

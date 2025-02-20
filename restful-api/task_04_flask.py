@@ -16,25 +16,33 @@ users = {
 
 @app.route("/")
 def home():
-    """Handles the root endpoint to display a welcome message."""
+    """
+    Return a welcome message.
+    """
     return "Welcome to the Flask API!"
 
 
 @app.route("/data")
 def get_usernames():
-    """Returns a list of all usernames stored in the users dictionary."""
+    """
+    Return a list of usernames.
+    """
     return jsonify(list(users.keys()))
 
 
 @app.route("/status")
 def status():
-    """Returns 'OK' status message."""
+    """
+    Return OK status.
+    """
     return "OK"
 
 
 @app.route("/users/<username>")
 def get_user(username):
-    """Returns the full object for a given username."""
+    """
+    Return user details for a given username.
+    """
     user = users.get(username)
 
     if user:
@@ -45,7 +53,9 @@ def get_user(username):
 
 @app.route("/add_user", methods=["POST"])
 def add_user():
-    """Adds a new user to the users dictionary based on the posted data."""
+    """
+    Add a new user to the users dictionary.
+    """
     data = request.get_json()
 
     if not data or "username" not in data:

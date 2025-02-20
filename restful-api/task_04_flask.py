@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+"""
+Module to develop a Simple API using Python with Flask
+"""
+
+
 from flask import Flask, jsonify, request
 
 # Instantiate the Flask application

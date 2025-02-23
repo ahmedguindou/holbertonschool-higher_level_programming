@@ -45,8 +45,7 @@ def login():
     user = users.get(username)
     if user and check_password_hash(user['password'], password):
         access_token = create_access_token(
-            identity=username,
-            additional_claims={"role": user['role']}
+            identity={"username": username, "role": user["role"]}
         )
 
         return jsonify(access_token=access_token)
@@ -71,8 +70,8 @@ def jwt_protected():
 @jwt_required()
 def admin_only():
     """Admin only endpoint."""
-    claims = get_jwt_identity()
-    if claims['role'] != 'admin':
+    user = get_jwt_identity()
+    if user.get("role") != "admin":
         return jsonify({"error": "Admin access required"}), 403
     return "Admin Access: Granted"
 

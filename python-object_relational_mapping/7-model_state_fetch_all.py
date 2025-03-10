@@ -16,7 +16,7 @@ if __name__ == "__main__":
               "<mysql username> <mysql password> <database name>")
         sys.exit(1)
 
-    # DB connection
+    # DB connectionn
     engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
         sys.argv[1], sys.argv[2], sys.argv[3]), pool_pre_ping=True)
 
